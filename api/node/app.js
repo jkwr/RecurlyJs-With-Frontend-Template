@@ -13,8 +13,8 @@ app.use(bodyParser());
 
 // Instantiate a configured recurly client
 var recurly = new Recurly({
-  SUBDOMAIN: 'RECURLY_SUBDOMAIN',
-  API_KEY: 'RECURLY_API_KEY'
+  SUBDOMAIN: 'https://jay.recurly.com',
+  API_KEY: 'ewr1-q1CqDpg7tJc5qkyRogA6VC'
 });
 
 // Set your Recurly public key

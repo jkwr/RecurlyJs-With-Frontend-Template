@@ -13,7 +13,7 @@
   <body>
     <section>
       <figure class="logo">
-        <span class="price">$10</span>
+        <span class="price"></span>
         <span class="term">monthly</span>
       </figure>
     </section>
@@ -21,30 +21,71 @@
     <section id="errors"></section>
 
     <section>
-      <form method="post" action="/api/subscriptions/new">
-        <div>
-          <div data-recurly="card"></div>
-        </div>
+    <form method="post" action="/api/subscriptions/new">
+      <label for="plan">Plan</label>
+      <select id="plan" data-recurly="plan" name='plan'>
+        <option value="basic"  selected>Basic</option>
+        <option value="standard">Standard</option>
+        <option value="premium">Premium</option>
+      </select>
 
-        <div>
-          <label for="first_name">First Name</label>
-          <input type="text" data-recurly="first_name" id="first_name" name="first-name">
-        </div>
+      <label for="plan-quantity">Quantity</label>
+      <input type="text" data-recurly="plan_quantity" id="plan-quantity" value="2">
+      
+      <label for="first_name">First Name</label>
+      <input type="text" data-recurly="first_name" id="first_name" name="first_name">
+      <label for="last_name">Last Name</label>
+      <input type="text" data-recurly="last_name" id="last_name" name="last_name">
+      
+      <label for="address1">Address</label>
+      <input data-recurly='address1' id="address1" ></input>
+      <label for="address2">Address 2</label>
+      <input data-recurly='address2' id="address2" ></input> 
+      <label for="city">City</label>
+      <input data-recurly='city' id="city" ></input>
+      <label for="state">State</label>
+      <input data-recurly='state' id="state" ></input>
 
-        <div>
-          <label for="last_name">Last Name</label>
-          <input type="text" data-recurly="last_name" id="last_name" name="last-name">
-        </div>
+      <label for="country">Country</label>
+      <select id="country" data-recurly="country">
+        <option value="US">United States</option>
+        <option value="GB">Great Britain</option>
+      </select>          
 
-        <button id="subscribe">Subscribe</button>
+      <label for="number">Card Number</label>
+      <div data-recurly="number" id="number"></div>
+      <label for="month">Month</label>
+      <div data-recurly="month" id="month"></div>
+      <label for="year">Year</label>
+      <div data-recurly="year" id="year"></div>
+      <label for="cvv">CVV</label>
+      <div data-recurly="cvv" id="cvv"></div>
 
-        <input type="hidden" data-recurly="token" name="recurly-token">
-      </form>
+      <!-- <label for="postal_code">Postal Code</label>
+      <input type="text" data-recurly="postal_code" id="postal_code"> -->
+
+     <!--  <p id="addons-title">Add-ons</p>
+      <p id="addons"></p>
+ -->
+      <p>Coupon</p>
+      <input type="text" data-recurly="coupon" name="coupon">
+
+     <!--  <input type="radio" value="USD" name="currency" data-recurly="currency" id="currency-USD" checked>
+      <label for="currency-USD">USD</label>
+      <input type="radio" value="GBP" name="currency" data-recurly="currency" id="currency-GBP">
+      <label for="currency-GBP">GBP</label> -->
+
+      <input type="hidden" data-recurly="token" name="recurly-token">
+
+
+      <button id="subscribe">Subscribe</button>
+      <div id="errors"></div>
+    </form>
     </section>
     <script>
       // Configure recurly.js
       recurly.configure({
-        publicKey: window.recurlyConfig.publicKey, // Set this to your own public key
+        publicKey: 'ewr1-q1CqDpg7tJc5qkyRogA6VC', // Set this to your own public key
         style: {
           all: {
             fontFamily: 'Open Sans',

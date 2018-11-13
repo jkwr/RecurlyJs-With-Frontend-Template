@@ -17,9 +17,10 @@
   <body>
     <form method="post" action="/api/subscriptions/new">
       <label for="plan">Plan</label>
-      <select id="plan" data-recurly="plan">
-        <option value="simpleplan" selected>Simple Plan</option>
-        <option value="complexplan">Complex Plan</option>
+      <select id="plan" data-recurly="plan" name='plan'>
+        <option value="basic" selected>Basic</option>
+        <option value="standard">Standard</option>
+        <option value="premium">Premium</option>
       </select>
 
       <label for="plan-quantity">Quantity</label>
@@ -34,9 +35,9 @@
       <label for="cvv">CVV</label>
       <div data-recurly="cvv" id="cvv"></div>
       <label for="first_name">First Name</label>
-      <input type="text" data-recurly="first_name" id="first_name" name="first-name">
+      <input type="text" data-recurly="first_name" id="first_name" name="first_name">
       <label for="last_name">Last Name</label>
-      <input type="text" data-recurly="last_name" id="last_name" name="last-name">
+      <input type="text" data-recurly="last_name" id="last_name" name="last_name">
 
       <label for="country">Country</label>
       <select id="country" data-recurly="country">
@@ -59,65 +60,14 @@
 
       <input type="hidden" data-recurly="token" name="recurly-token">
 
-      <p>
-        Due now
-      </p>
-      <ul>
-        <li>
-          Discount:
-          <span data-recurly="currency_symbol"></span>
-          <span data-recurly="discount_now"></span>
-        </li>
-        <li>
-          Subtotal:
-          <span data-recurly="currency_symbol"></span>
-          <span data-recurly="subtotal_now"></span>
-        </li>
-        <li>
-          Tax:
-          <span data-recurly="currency_symbol"></span>
-          <span data-recurly="taxes_now"></span>
-        </li>
-        <li>----</li>
-        <li>
-          Total:
-          <span data-recurly="currency_symbol"></span>
-          <span data-recurly="total_now"></span>
-        </li>
-      </ul>
-      <p>
-        Due later
-      </p>
-      <ul>
-        <li>
-          Discount:
-          <span data-recurly="currency_symbol"></span>
-          <span data-recurly="discount_next"></span>
-        </li>
-        <li>
-          Subtotal:
-          <span data-recurly="currency_symbol"></span>
-          <span data-recurly="subtotal_next"></span>
-        </li>
-        <li>
-          Tax:
-          <span data-recurly="currency_symbol"></span>
-          <span data-recurly="taxes_next"></span>
-        </li>
-        <li>----</li>
-        <li>
-          Total:
-          <span data-recurly="currency_symbol"></span>
-          <span data-recurly="total_next"></span>
-        </li>
-      </ul>
+
       <button id="subscribe">Subscribe</button>
       <div id="errors"></div>
     </form>
     <script>
       // Configure recurly.js
       recurly.configure({
-        publicKey: window.recurlyConfig.publicKey, // Set this to your own public key
+        publicKey: 'ewr1-q1CqDpg7tJc5qkyRogA6VC', // Set this to your own public key
         style: {
           all: {
             fontFamily: 'Open Sans',

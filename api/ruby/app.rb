@@ -7,15 +7,15 @@ require 'recurly'
 require 'securerandom'
 
 # Configure the Recurly gem with your subdomain and API key
-Recurly.subdomain = 'RECURLY_SUBDOMAIN'
-Recurly.api_key = 'RECURLY_API_KEY'
+Recurly.subdomain = 'jay'
+Recurly.api_key = '4bfc4c86d43749dc95d6e05ad009ce58'
 
 set :port, 9001
 set :public_folder, '../../public'
 enable :logging
 
-success_url = 'SUCCESS_URL'
-error_url = 'ERROR_URL'
+success_url = 'https://www.success.com/'
+error_url = 'https://thebest404pageeverredux.com/'
 
 # POST route to handle a new subscription form
 post '/api/subscriptions/new' do
@@ -31,12 +31,17 @@ post '/api/subscriptions/new' do
     # Create the subscription using minimal
     # information: plan_code, account_code, and
     # the token we generated on the frontend
-    subscription = Recurly::Subscription.create! plan_code: :basic,
+
+
+
+    subscription = Recurly::Subscription.create! plan_code: params['plan'],
       account: {
         account_code: SecureRandom.uuid,
+        first_name: params['first_name'],
+        last_name: params['last_name'],
         billing_info: { token_id: params['recurly-token'] }
       }
-
+  
     # The subscription has been created and we can redirect
     # to a confirmation page
     redirect success_url
@@ -54,6 +59,8 @@ end
 post '/api/accounts/new' do
   begin
     Recurly::Account.create! account_code: SecureRandom.uuid,
+    first_name: params['first_name'],
+        last_name: params['last_name'],
       billing_info: { token_id: params['recurly-token'] }
     redirect success_url
   rescue Recurly::Resource::Invalid, Recurly::API::ResponseError => e
@@ -76,10 +83,33 @@ end
 # This endpoint provides configuration to recurly.js
 get '/config.js' do
   content_type :js
-  "window.recurlyConfig = { publicKey: '#{ENV['RECURLY_PUBLIC_KEY']}' }"
+  "window.recurlyConfig = { publicKey: '#{ENV['ewr1-q1CqDpg7tJc5qkyRogA6VC']}' }"
 end
 
 # All other routes will be treated as static requests
 get '*' do
   send_file File.join(settings.public_folder, request.path, 'index.html')
 end
+
+
+Recurly::Coupon.find_each do |coupon|
+  puts "Coupon: #{coupon.inspect}"
+end
+
+coupon = Recurly::Coupon.new(
+  :coupon_code    => '10off',
+  :duration     => 'single_use'
+)
+
+coupon.name = '10% off'
+coupon.discount_type = 'percent'
+coupon.discount_percent = 10
+
+coupon.applies_to_all_plans = false
+coupon.plan_codes = %w(premium)
+
+coupon.redemption_resource = 'subscription'
+
+coupon.save
+
+coupon = Recurly::Coupon.find('10off')
