@@ -7,8 +7,8 @@ require 'recurly'
 require 'securerandom'
 
 # Configure the Recurly gem with your subdomain and API key
-Recurly.subdomain = 'jay'
-Recurly.api_key = '4bfc4c86d43749dc95d6e05ad009ce58'
+Recurly.subdomain = 'SUBDOMAIN'
+Recurly.api_key = 'API KEY'
 
 set :port, 9001
 set :public_folder, '../../public'
@@ -83,7 +83,7 @@ end
 # This endpoint provides configuration to recurly.js
 get '/config.js' do
   content_type :js
-  "window.recurlyConfig = { publicKey: '#{ENV['ewr1-q1CqDpg7tJc5qkyRogA6VC']}' }"
+  "window.recurlyConfig = { publicKey: '#{ENV['API_KEY']}' }"
 end
 
 # All other routes will be treated as static requests
